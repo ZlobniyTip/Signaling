@@ -5,6 +5,7 @@ public class Fader : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private EndPoint _endPoint;
+
     private Coroutine _fadingJob;
     private float _maxVolume = 1f;
     private float _minVolume = 0f;
@@ -25,12 +26,6 @@ public class Fader : MonoBehaviour
         {
             StopCoroutine(_fadingJob);
         }
-    }
-
-    public void RestartCoroutine()
-    {
-        Stop();
-        _fadingJob = StartCoroutine(Fading());
     }
 
     private IEnumerator Fading()
@@ -55,5 +50,11 @@ public class Fader : MonoBehaviour
             _audioSource.volume = volume;
             Debug.Log(trueOrFalse);
         }
+    }
+
+    public void RestartCoroutine()
+    {
+        Stop();
+        _fadingJob = StartCoroutine(Fading());
     }
 }

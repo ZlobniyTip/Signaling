@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Path : MonoBehaviour
 {
     [SerializeField] private Transform _path;
     [SerializeField] private float _speed;
-    private Transform[] _points;
 
+    private Transform[] _points;
     private int _currentPoints;
 
     private void Start()

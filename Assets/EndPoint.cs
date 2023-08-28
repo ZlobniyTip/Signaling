@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +6,7 @@ public class EndPoint : MonoBehaviour
     [SerializeField] private UnityEvent _reached;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private Fader _fader;
+
     private bool _isCollision;
 
     private void OnTriggerEnter2D(Collider2D collider)
