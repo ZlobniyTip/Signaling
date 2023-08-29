@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EndPoint : MonoBehaviour
+public class BeingTrygger : MonoBehaviour
 {
     [SerializeField] private UnityEvent _reached;
     [SerializeField] private Collider2D _collider;
     [SerializeField] private Fader _fader;
 
-    private bool _isCollision;
+    public bool _isCollision { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -26,15 +26,5 @@ public class EndPoint : MonoBehaviour
             _isCollision = false;
             _fader.RestartCoroutine();
         }
-    }
-
-    public bool IsCollision()
-    {
-        if (_isCollision)
-        {
-            return true;
-        }
-
-        return false;
     }
 }

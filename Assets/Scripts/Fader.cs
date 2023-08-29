@@ -4,7 +4,7 @@ using UnityEngine;
 public class Fader : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private EndPoint _endPoint;
+    [SerializeField] private BeingTrygger _endPoint;
 
     private Coroutine _fadingJob;
     private float _maxVolume = 1f;
@@ -12,8 +12,6 @@ public class Fader : MonoBehaviour
     private float _recoveryRate = 0.3f;
     private bool _inTrigger = true;
     private bool _outTrigger = false;
-    private string _true = "True";
-    private string _false = "False";
 
     private void Start()
     {
@@ -32,23 +30,22 @@ public class Fader : MonoBehaviour
     {
         while (_audioSource.volume != _maxVolume || _audioSource.volume != _minVolume)
         {
-            SetVolume(_inTrigger, _maxVolume, _true);
+            SetVolume(_inTrigger, _maxVolume);
 
             yield return null;
 
-            SetVolume(_outTrigger, _minVolume, _false);
+            SetVolume(_outTrigger, _minVolume);
 
             yield return null;
         }
     }
 
-    private void SetVolume(bool isTrigger, float target, string trueOrFalse)
+    private void SetVolume(bool isTrigger, float target)
     {
-        if (_endPoint.IsCollision() == isTrigger)
+        if (_endPoint._isCollision == isTrigger)
         {
             float volume = Mathf.MoveTowards(_audioSource.volume, target, _recoveryRate * Time.deltaTime);
             _audioSource.volume = volume;
-            Debug.Log(trueOrFalse);
         }
     }
 
