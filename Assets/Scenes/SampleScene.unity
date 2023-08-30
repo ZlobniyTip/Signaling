@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 1296071319}
-  _endPoint: {fileID: 1296071317}
+  _beingTrygger: {fileID: 1296071317}
 --- !u!1 &1586825085
 GameObject:
   m_ObjectHideFlags: 0

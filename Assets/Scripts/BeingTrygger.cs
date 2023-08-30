@@ -7,13 +7,15 @@ public class BeingTrygger : MonoBehaviour
     [SerializeField] private Collider2D _collider;
     [SerializeField] private Fader _fader;
 
-    public bool _isCollision { get; private set; }
+    private float _maxVolume = 1f;
+    private float _minVolume = 0f;
+    public float Target { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (_collider.TryGetComponent<Player>(out Player player))
         {
-            _isCollision = true;
+            Target = _maxVolume;
             _fader.RestartCoroutine();
             _reached?.Invoke();
         }
@@ -23,7 +25,7 @@ public class BeingTrygger : MonoBehaviour
     {
         if (_collider.TryGetComponent<Player>(out Player player))
         {
-            _isCollision = false;
+            Target = _minVolume;
             _fader.RestartCoroutine();
         }
     }

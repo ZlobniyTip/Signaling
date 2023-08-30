@@ -4,7 +4,7 @@ using UnityEngine;
 public class Fader : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private BeingTrygger _endPoint;
+    [SerializeField] private BeingTrygger _beingTrygger;
 
     private Coroutine _fadingJob;
     private float _maxVolume = 1f;
@@ -12,13 +12,14 @@ public class Fader : MonoBehaviour
     private float _recoveryRate = 0.3f;
     private bool _inTrigger = true;
     private bool _outTrigger = false;
+    private float _target;
 
     private void Start()
     {
         RestartCoroutine();
     }
 
-    private void Stop()
+    private void StopCoroutine()
     {
         if (_fadingJob != null)
         {
@@ -26,32 +27,26 @@ public class Fader : MonoBehaviour
         }
     }
 
-    private IEnumerator Fading()
+    private IEnumerator Fading(float target)
     {
-        while (_audioSource.volume != _maxVolume || _audioSource.volume != _minVolume)
+        while (_audioSource.volume != target)
         {
-            SetVolume(_inTrigger, _maxVolume);
-
-            yield return null;
-
-            SetVolume(_outTrigger, _minVolume);
+            SetVolume(target);
 
             yield return null;
         }
     }
 
-    private void SetVolume(bool isTrigger, float target)
+    private void SetVolume(float target)
     {
-        if (_endPoint._isCollision == isTrigger)
-        {
-            float volume = Mathf.MoveTowards(_audioSource.volume, target, _recoveryRate * Time.deltaTime);
-            _audioSource.volume = volume;
-        }
+        float volume = Mathf.MoveTowards(_audioSource.volume, target, _recoveryRate * Time.deltaTime);
+        _audioSource.volume = volume;
     }
 
     public void RestartCoroutine()
     {
-        Stop();
-        _fadingJob = StartCoroutine(Fading());
+        _target = _beingTrygger.Target;
+        StopCoroutine();
+        _fadingJob = StartCoroutine(Fading(_target));
     }
 }
